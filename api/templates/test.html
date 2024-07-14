@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profit NC</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <style>
+        /* Reset default browser styles */
+        * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+        
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #393939;
+          padding: 20px;
+          text-align: center;
+        }
+      
+        /* Style the table */
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          border-radius: 12px;
+          overflow: hidden;
+          box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+          background-color: #fff;
+        }
+        
+        /* Style table header */
+        th, td {
+          padding: 12px 15px;
+          text-align: left;
+          border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+          background-color: #f2f2f2;
+          color: #333;
+          text-transform: uppercase;
+        }
+        
+        /* Alternate row colors */
+        tr:nth-child(even) {
+          background-color: #f9f9f9;
+        }
+        
+        /* Hover effect */
+        tbody tr:hover {
+          background-color: #e0e0e0;
+        }
+      </style>
+</head>
+<body>
+    <div class="container">
+        <h1>NC Profit Table</h1>
+
+        <table class="profit_table" border="1">
+            <thead>
+                <tr>
+                    <th>Token</th>
+                    <th>CROW</th>
+                    <th>vDia / Unit</th>
+                    <th>vDia / CROW</th>
+                    <th>CROW / vDia</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for token, price in price_list %}
+                <tr>
+                    <td class="token">{{ token }}</td>
+                    <td class="price">{{ price }}</td>
+                    <td>
+                        <input type="number" name="values[{{ token }}]" class="user-value" required>
+                    </td>
+                    <td class="division-result">N/A</td>
+                    <td class="vDia-crow-result">N/A</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>CROW Value</h2>
+        <p id="crow-value">{{ crow_value }}</p>
+        <h2>Donate WEMIX or CROW</h2>
+        <p>0x72218c42d9032eec9bb1b4b5d4343d9800738b4c</p>
+    </div>
+</body>
+</html>

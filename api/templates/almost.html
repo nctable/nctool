@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profit NC</title>
+    <script>
+        function calculateDivisions() {
+            const rows = document.querySelectorAll('.profit_table tbody tr');
+            rows.forEach(row => {
+                const price = parseFloat(row.querySelector('.price').textContent);
+                const token = row.querySelector('.token').textContent;
+                const userValueInput = row.querySelector('.user-value');
+                const userValue = parseFloat(userValueInput.value) || 0;
+                let divisionResult;
+
+javascript
+
+            if (token === 'MORION' || token === 'PAPYRUS') {
+                divisionResult = (userValue * 10) / price;
+            } else {
+                divisionResult = userValue / price;
+            }
+
+            row.querySelector('.division-result').textContent = isFinite(divisionResult) ? divisionResult.toFixed(2) : 'N/A';
+        });
+    }
+
+    document.addEventListener('input', calculateDivisions);
+</script>
+
+</head>
+<body>
+    <h1>NC Profit Table</h1>
+    <form method="POST" action="/">
+        <table class="profit_table" border="1">
+            <thead>
+                <tr>
+                    <th>Token</th>
+                    <th>CROW</th>
+                    <th>vDia / Unit</th>
+                    <th>vDia / CROW</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for token, price in price_list %}
+                <tr>
+                    <td class="token">{{ token }}</td>
+                    <td class="price">{{ price }}</td>
+                    <td>
+                        <input type="number" name="values[{{ token }}]" step="0.01" class="user-value" required>
+                    </td>
+                    <td class="division-result">N/A</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+css
+
+</form>
+
+{% if user_values %}
+<h2>Your Entered Values</h2>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Token</th>
+            <th>Your Value</th>
+            <th>Value/Price</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for token, value in user_values.items() %}
+        <tr>
+            <td>{{ token }}</td>
+            <td>{{ value }}</td>
+            {% if token == 'MORION' or token == 'PAPYRUS' %}
+                <td>{{ (value * 10 / price_dict[token]) | round(2) }}</td>
+            {% else %}
+                <td>{{ (value / price_dict[token]) | round(2) }}</td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+</body>
+</html>

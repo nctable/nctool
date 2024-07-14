@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profit NC</title>
+</head>
+<body>
+    <table class="profit_table" border="1">
+        <thead>
+            <tr>
+                <th>Token</th>
+                <th>Price</th>
+                <th>vDia/Unit</th>
+                <th>vDia/CROW</th>
+                <th>USD/1K vDia</th>
+            </tr>
+        </thead>
+        <tbody>
+        {%for token,price in price_list%}
+            <tr>
+                <td>{{ token }}</td>
+                <td>{{ price }}</td>
+                <td>
+                    <input type="number" name="values[{{ token }}]" required>
+                </td>
+                <td> </td>
+            </tr>    
+        {%endfor%}
+        </tbody>
+    </table>
+</body>
+</html>
